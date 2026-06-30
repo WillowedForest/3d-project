@@ -1,14 +1,16 @@
 
 #include "raylib.h"
-
-const Vector2 screen{800.0f, 480.0f};
-char outPut[5];
-
+#include <stdio.h>
+#include <iostream>
+#include <string>
+using namespace std;
 
 int main() {
-    InitWindow(screen.x, screen.y, "haiiiiii");
-    SetTargetFPS(165);
 
+    InitWindow(1920, 1080, "haiiiiii");
+    Vector2 screen{ GetMonitorWidth(GetCurrentMonitor()) / 2, GetMonitorHeight(GetCurrentMonitor()) / 2 };
+    SetWindowSize(screen.x, screen.y);
+    SetTargetFPS(165);
     Camera3D camera;
     camera.position = {10.0f, 10.0f, 10.0f};
     camera.target = Vector3{2.0f, 2.0f, 2.0f};
