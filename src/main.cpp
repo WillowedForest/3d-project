@@ -1,16 +1,14 @@
 
 #include "raylib.h"
-#include <stdio.h>
-#include <iostream>
-#include <string>
-using namespace std;
+
+const Vector2 screen{800.0f, 480.0f};
+char outPut[5];
+
 
 int main() {
-
-    InitWindow(1920, 1080, "haiiiiii");
-    Vector2 screen{ GetMonitorWidth(GetCurrentMonitor()) / 2, GetMonitorHeight(GetCurrentMonitor()) / 2 };
-    SetWindowSize(screen.x, screen.y);
+    InitWindow(screen.x, screen.y, "haiiiiii");
     SetTargetFPS(165);
+
     Camera3D camera;
     camera.position = {10.0f, 10.0f, 10.0f};
     camera.target = Vector3{2.0f, 2.0f, 2.0f};
@@ -41,4 +39,42 @@ int main() {
     CloseWindow();
 
     return 0;
+}
+
+
+Mesh CreateCustomMesh() {
+    Mesh mesh;
+    mesh.vertexCount = 4;
+    mesh.triangleCount = 2;
+
+    mesh.vertices = (float *)MemAlloc(mesh.vertexCount * 3 * sizeof(float));
+    mesh.normals = (float *)MemAlloc(mesh.vertexCount * 3 * sizeof(float));
+    mesh.texcoords = (float *)MemAlloc(mesh.vertexCount * 2 * sizeof(float));
+    mesh.indices = (unsigned short *)MemAlloc(mesh.triangleCount * 3 * sizeof(unsigned short));
+
+    float positions[] = {
+        -1.0f,  -1.0f, 0.0f,
+        1.0f, -1.0f, 0.0f,
+        1.0f,  1.0f, 0.0f,
+        -1.0f,  1.0f, 0.0f
+    };
+
+    float normals[] = {
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f
+    };
+
+    float texcoords[] = {
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f
+    };
+
+    unsigned short indices[] = {
+        0, 1, 2,
+        0, 2, 3
+    };
 }
