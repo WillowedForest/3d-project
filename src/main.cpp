@@ -2,7 +2,7 @@
 #include "raylib.h"
 #include <stdio.h>
 
-const Vector2 screen{800.0f, 480.0f};
+const Vector2 screen{1280.0f, 720.0f};
 char outPut[5];
 
 namespace std{};
@@ -58,6 +58,7 @@ Mesh CreateCustomMesh() {
 int main() {
     InitWindow(screen.x, screen.y, "haiiiiii");
     SetTargetFPS(165);
+    DisableCursor();
 
     Mesh mesh = CreateCustomMesh();
     Material material = LoadMaterialDefault();
@@ -83,10 +84,9 @@ int main() {
 
         BeginMode3D(camera);
 
-        DrawModel(model, Vector3{0.0f, 0.0f, 0.0f},1.0f, WHITE);
-        //DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, PINK);
+        DrawModel(model, Vector3{0.0f, 0.0f, 0.0f}, 1.0f, WHITE);
 
-        DrawGrid(1000, 1.0f);
+        DrawGrid(10, 1.0f);
 
         EndMode3D();
         EndDrawing();
