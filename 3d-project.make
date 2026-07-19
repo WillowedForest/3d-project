@@ -28,7 +28,7 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
-INCLUDES += -Isrc/nlohmann -Isrc -Iinclude -Ibuild/external/raylib-master/src
+INCLUDES += -Isrc -Iinclude -Isrc/nlohmann -Ibuild/external/raylib-master/src
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
@@ -42,66 +42,66 @@ endef
 
 ifeq ($(config),debug_x64)
 TARGETDIR = bin/Debug
-TARGET = $(TARGETDIR)/boxes
-OBJDIR = obj/x64/Debug/boxes
+TARGET = $(TARGETDIR)/3d-project
+OBJDIR = obj/x64/Debug/3d-project
 DEFINES += -DDEBUG -DPLATFORM_DESKTOP -DGRAPHICS_API_OPENGL_33 -D_GLFW_X11
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -Wshadow -g -std=c17
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -Wshadow -g -std=c++26
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -Wshadow -g -std=c++20
 LIBS += bin/Debug/libraylib.a -lpthread -lm -ldl -lrt -lX11
 LDDEPS += bin/Debug/libraylib.a
 ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64
 
 else ifeq ($(config),debug_x86)
 TARGETDIR = bin/Debug
-TARGET = $(TARGETDIR)/boxes
-OBJDIR = obj/x86/Debug/boxes
+TARGET = $(TARGETDIR)/3d-project
+OBJDIR = obj/x86/Debug/3d-project
 DEFINES += -DDEBUG -DPLATFORM_DESKTOP -DGRAPHICS_API_OPENGL_33 -D_GLFW_X11
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m32 -Wshadow -g -std=c17
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m32 -Wshadow -g -std=c++26
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m32 -Wshadow -g -std=c++20
 LIBS += bin/Debug/libraylib.a -lpthread -lm -ldl -lrt -lX11
 LDDEPS += bin/Debug/libraylib.a
 ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib32 -m32
 
 else ifeq ($(config),debug_arm64)
 TARGETDIR = bin/Debug
-TARGET = $(TARGETDIR)/boxes
-OBJDIR = obj/ARM64/Debug/boxes
+TARGET = $(TARGETDIR)/3d-project
+OBJDIR = obj/ARM64/Debug/3d-project
 DEFINES += -DDEBUG -DPLATFORM_DESKTOP -DGRAPHICS_API_OPENGL_33 -D_GLFW_X11
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -Wshadow -g -std=c17
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -Wshadow -g -std=c++26
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -Wshadow -g -std=c++20
 LIBS += bin/Debug/libraylib.a -lpthread -lm -ldl -lrt -lX11
 LDDEPS += bin/Debug/libraylib.a
 ALL_LDFLAGS += $(LDFLAGS)
 
 else ifeq ($(config),release_x64)
 TARGETDIR = bin/Release
-TARGET = $(TARGETDIR)/boxes
-OBJDIR = obj/x64/Release/boxes
+TARGET = $(TARGETDIR)/3d-project
+OBJDIR = obj/x64/Release/3d-project
 DEFINES += -DNDEBUG -DPLATFORM_DESKTOP -DGRAPHICS_API_OPENGL_33 -D_GLFW_X11
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -Wshadow -O2 -std=c17
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -Wshadow -O2 -std=c++26
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -Wshadow -O2 -std=c++20
 LIBS += bin/Release/libraylib.a -lpthread -lm -ldl -lrt -lX11
 LDDEPS += bin/Release/libraylib.a
 ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64 -s
 
 else ifeq ($(config),release_x86)
 TARGETDIR = bin/Release
-TARGET = $(TARGETDIR)/boxes
-OBJDIR = obj/x86/Release/boxes
+TARGET = $(TARGETDIR)/3d-project
+OBJDIR = obj/x86/Release/3d-project
 DEFINES += -DNDEBUG -DPLATFORM_DESKTOP -DGRAPHICS_API_OPENGL_33 -D_GLFW_X11
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m32 -Wshadow -O2 -std=c17
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m32 -Wshadow -O2 -std=c++26
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m32 -Wshadow -O2 -std=c++20
 LIBS += bin/Release/libraylib.a -lpthread -lm -ldl -lrt -lX11
 LDDEPS += bin/Release/libraylib.a
 ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib32 -m32 -s
 
 else ifeq ($(config),release_arm64)
 TARGETDIR = bin/Release
-TARGET = $(TARGETDIR)/boxes
-OBJDIR = obj/ARM64/Release/boxes
+TARGET = $(TARGETDIR)/3d-project
+OBJDIR = obj/ARM64/Release/3d-project
 DEFINES += -DNDEBUG -DPLATFORM_DESKTOP -DGRAPHICS_API_OPENGL_33 -D_GLFW_X11
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -Wshadow -O2 -std=c17
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -Wshadow -O2 -std=c++26
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -Wshadow -O2 -std=c++20
 LIBS += bin/Release/libraylib.a -lpthread -lm -ldl -lrt -lX11
 LDDEPS += bin/Release/libraylib.a
 ALL_LDFLAGS += $(LDFLAGS) -s
@@ -129,10 +129,9 @@ all: $(TARGET)
 
 $(TARGET): $(GENERATED) $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
 	$(PRELINKCMDS)
-	@echo Linking boxes
+	@echo Linking 3d-project
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
-	./bin/Debug/boxes
 
 $(TARGETDIR):
 	@echo Creating $(TARGETDIR)
@@ -151,7 +150,7 @@ else
 endif
 
 clean:
-	@echo Cleaning boxes
+	@echo Cleaning 3d-project
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(GENERATED)
