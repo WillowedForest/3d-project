@@ -7,9 +7,14 @@
 const Vector2 screen{800.0f, 480.0f};
 char outPut[5];
 
+const char* saveFilPeath = "test.json";
+
 bool notopen = false;
 
 using json = nlohmann::json;
+
+Camera3D camera;
+
 
 Mesh CreateCustomMesh(float size = 1.0f) {
     Mesh mesh = { 0 };
@@ -90,36 +95,49 @@ Mesh CreateCustomMesh(float size = 1.0f) {
 
 }
 
-//void SavePosition(Vector3 vec){
-//    json data;
-//
-//    data["x"] = vec.x;
-//    data["y"] = vec.y;
-//    data["z"] = vec.z;
-//
-//    std::ofstream outfile("test.json");
-//
-//    if(!outfile.is_open()){
-//        notopen = true;
-//    }
-//
-//    outfile << data.dump(4);
-//    outfile.close();
-//
-//}
+void SaveCamersPosition(){
+    json data;
 
+    data["posx"] = camera.position.x;
+    data["posy"] = camera.position.y;
+    data["posz"] = camera.position.z;
+    data["rotx"] = camera.target.x;
+    data["roty"] = camera.target.y;
+    data["rotz"] = camera.target.z;
+
+    std::ofstream outfile(saveFilPeath);
+
+    if(!outfile.is_open()){
+        notopen = true;
+    }
+
+    outfile << data.dump(4);
+    outfile.close();
+
+}
+
+void LoadPlayerPosition(){
+    std::ifstream file("test.json");
+
+    json data = json::parse(file);
+    file.close();
+
+    camera.target = Vector3{data["rotx"].get<float>(), data["roty"].get<float>(), data["rotz"].get<float>()};
+    camera.position = Vector3{data["posx"].get<float>(), data["posy"].get<float>(), data["posz"].get<float>()};
+
+}
 
 int main() {
     InitWindow(screen.x, screen.y, "haiiiiii");
     SetTargetFPS(165);
+    DisableCursor();
 
-    Camera3D camera;
     camera.position = {10.0f, 10.0f, 10.0f};
     camera.target = Vector3{2.0f, 2.0f, 2.0f};
     camera.up = (Vector3{0.0f, 1.0f, 0.0f});
     camera.fovy = 90.0;
     camera.projection = CAMERA_PERSPECTIVE;
-    
+
     Vector3 cubePosition = {0.0f, 0.0f, 0.0f};
 
     Mesh mesh = CreateCustomMesh();
@@ -132,23 +150,35 @@ int main() {
 
         BeginDrawing();
 
-        ClearBackground(PURPLE);
-        
+        ClearBackground(DARKGRAY);
+
         BeginMode3D(camera);
 
        // DrawModelEx(model, Vector3{ 1.0f, 1.0f, 1.0f }, Vector3{ 1.0f, 1.0f, 0.0f },30.0f, Vector3{ 2.0f, 2.0f, 2.0f }, WHITE);
         DrawModel(model, Vector3{ 0.0f,0.0f,0.0f }, 1.0f, WHITE);
-       
+
         DrawCube(Vector3{ 0.0f,0.0f,0.0f }, 5, 5, 5, WHITE);
 
         DrawGrid(500, 2.0f);
 
+
+
+
         EndMode3D();
         EndDrawing();
+
+        if(IsKeyPressed(KEY_T)){
+            SaveCamersPosition();
+        }
+
+        if (IsKeyPressed(KEY_Y)) {
+            LoadPlayerPosition();
+        }
+
+
+
     }
-    //if(IsKeyPressed(KEY_T)){
-    ////    SavePosition(camera.position);
-    //}
+
 
     CloseWindow();
 
