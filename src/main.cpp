@@ -12,7 +12,7 @@ bool notopen = false;
 using json = nlohmann::json;
 
 Mesh CreateCustomMesh(float size = 1.0f) {
-    Mesh mesh;
+    Mesh mesh = { 0 };
     mesh.vertexCount = 24;
     mesh.triangleCount = 12;
 
@@ -31,7 +31,7 @@ Mesh CreateCustomMesh(float size = 1.0f) {
         // Top face (Y+)
         -s,  s, -s,   -s,  s,  s,    s,  s,  s,    s,  s, -s,
         // Bottom face (Y-)
-        -s, -s, -s,    s, -s, -s,    s, -s,  s,   -s, -s,  s,
+        -s, -s, -s,    s, -s, -s,    s, s,  s,   -s, -s,  s,
         // Right face (X+)
          s, -s, -s,    s,  s, -s,    s,  s,  s,    s, -s,  s,
         // Left face (X-)
@@ -50,7 +50,7 @@ Mesh CreateCustomMesh(float size = 1.0f) {
         // Right
         1.0f, 0.0f, 0.0f,    1.0f, 0.0f, 0.0f,    1.0f, 0.0f, 0.0f,    1.0f, 0.0f, 0.0f,
         // Left
-        1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f
+        -1.0f, 0.0f, 0.0f,  -1.0f, 0.0f, 0.0f,  -1.0f, 0.0f, 0.0f,  -1.0f, 0.0f, 0.0f
     };
 
     float texcoords[] = {
@@ -71,12 +71,20 @@ Mesh CreateCustomMesh(float size = 1.0f) {
         20, 21, 22, 20, 22, 23    // Left
     };
 
-    mesh.vertices = vertices;
-    mesh.normals = normals;
-    mesh.texcoords = texcoords;
-    mesh.indices = indices;
 
-    //UploadMesh(&mesh, false);
+    size_t vCount = sizeof(vertices) / sizeof(vertices[0]);
+    for (size_t i = 0; i < vCount; i++) mesh.vertices[i] = vertices[i];
+
+    size_t nCount = sizeof(normals) / sizeof(normals[0]);
+    for (size_t i = 0; i < nCount; i++) mesh.normals[i] = normals[i];
+
+    size_t tCount = sizeof(texcoords) / sizeof(texcoords[0]);
+    for (size_t i = 0; i < tCount; i++) mesh.texcoords[i] = texcoords[i];
+
+    size_t iCount = sizeof(indices) / sizeof(indices[0]);
+    for (size_t i = 0; i < iCount; i++) mesh.indices[i] = indices[i];
+
+    UploadMesh(&mesh, false);
 
     return mesh;
 
@@ -100,14 +108,10 @@ Mesh CreateCustomMesh(float size = 1.0f) {
 //
 //}
 
+
 int main() {
     InitWindow(screen.x, screen.y, "haiiiiii");
     SetTargetFPS(165);
-    DisableCursor();
-
-    Material material = LoadMaterialDefault();
-    Model model = LoadModelFromMesh(CreateCustomMesh(2));
-    model.materials[0] = material;
 
     Camera3D camera;
     camera.position = {10.0f, 10.0f, 10.0f};
@@ -118,6 +122,10 @@ int main() {
     
     Vector3 cubePosition = {0.0f, 0.0f, 0.0f};
 
+    Mesh mesh = CreateCustomMesh();
+    Model model = LoadModelFromMesh(mesh);
+    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].color = WHITE;
+
     while (!WindowShouldClose()) {
 
         UpdateCamera(&camera, CAMERA_FREE);
@@ -126,20 +134,18 @@ int main() {
 
         ClearBackground(PURPLE);
         
-        DrawText("AAAAAAAAAAAA", 0, 0, 20, BLACK);
-        
         BeginMode3D(camera);
 
-        DrawModel(model, Vector3{ 1.0f, 1.0f, 1.0f }, 1.0f, BLACK);
+       // DrawModelEx(model, Vector3{ 1.0f, 1.0f, 1.0f }, Vector3{ 1.0f, 1.0f, 0.0f },30.0f, Vector3{ 2.0f, 2.0f, 2.0f }, WHITE);
+        DrawModel(model, Vector3{ 0.0f,0.0f,0.0f }, 1.0f, WHITE);
        
-        //DrawCube(Vector3{ 0.0f,0.0f,0.0f }, 5, 5, 5, WHITE);
+        DrawCube(Vector3{ 0.0f,0.0f,0.0f }, 5, 5, 5, WHITE);
 
         DrawGrid(500, 2.0f);
 
         EndMode3D();
         EndDrawing();
     }
-
     //if(IsKeyPressed(KEY_T)){
     ////    SavePosition(camera.position);
     //}
