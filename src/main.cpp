@@ -8,6 +8,8 @@
 const Vector2 screen{800.0f, 480.0f};
 char outPut[5];
 
+bool notopen = false;
+
 using json = nlohmann::json;
 
 Mesh CreateCustomMesh(float size = 1.0f) {
@@ -49,7 +51,7 @@ Mesh CreateCustomMesh(float size = 1.0f) {
         // Right
         1.0f, 0.0f, 0.0f,    1.0f, 0.0f, 0.0f,    1.0f, 0.0f, 0.0f,    1.0f, 0.0f, 0.0f,
         // Left
-        -1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f
+        1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 0.0f, 0.0f
     };
 
     float texcoords[] = {
@@ -75,20 +77,27 @@ Mesh CreateCustomMesh(float size = 1.0f) {
     mesh.texcoords = texcoords;
     mesh.indices = indices;
 
+    UploadMesh(&mesh, false);
+
     return mesh;
 
 }
 
-void SavePosition(Vector3 vec, const char* filename){
+void SavePosition(Vector3 vec){
     json data;
 
     data["x"] = vec.x;
     data["y"] = vec.y;
     data["z"] = vec.z;
 
-    std::ofstream file(filename);
-    file << data.dump(4);
-    file.close();
+    std::ofstream outfile("test.json");
+
+    if(!outfile.is_open()){
+        notopen = true;
+    }
+
+    outfile << data.dump(4);
+    outfile.close();
 
 }
 
@@ -129,16 +138,8 @@ int main() {
 
     }
 
-
-    std::ofstream outFile("newfile.txt"); // Specify the file name
-
-    // Check if the file is open
-    if (outFile.is_open()) {
-        outFile << "Hello, this file is next to the executable!"; // Write to the file
-        outFile.close(); // Close the file
-    } else {
-        // Handle error
-        std::cerr << "Unable to open file";
+    if(IsKeyPressed(KEY_T)){
+        SavePosition(camera.position);
     }
 
     CloseWindow();
