@@ -7,6 +7,36 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{21EB8090-0D4E-1035-B6D3-48EBA215DCB7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\nlohmann">
+      <UniqueIdentifier>{4BDC4DC4-B748-09BF-803C-A11CEC672B27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nlohmann\detail">
+      <UniqueIdentifier>{ADB18128-996C-71D4-4224-EA1E2EBEBB64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nlohmann\detail\conversions">
+      <UniqueIdentifier>{F501BDFF-E17E-B042-0AFC-B056F6D74CD6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nlohmann\detail\input">
+      <UniqueIdentifier>{8C3FAA43-787B-ADAD-E18D-C5A4CDE855C8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nlohmann\detail\iterators">
+      <UniqueIdentifier>{59BE4BB9-4510-23A9-2E2F-60B91A203C92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nlohmann\detail\meta">
+      <UniqueIdentifier>{C3C75419-2F36-AA98-781F-6598E4CC9F34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nlohmann\detail\meta\call_std">
+      <UniqueIdentifier>{58D59511-443D-5CDF-ADA8-70F5992F73CB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nlohmann\detail\output">
+      <UniqueIdentifier>{2DED71C7-99A6-DC71-2206-F74B8EBE92E1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nlohmann\thirdparty">
+      <UniqueIdentifier>{65C4EA98-5115-D6DA-7A79-C49C66296944}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nlohmann\thirdparty\hedley">
+      <UniqueIdentifier>{4F4385E6-BBD2-46D1-C4CE-27E930DD81DD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Game Resource Files">
       <UniqueIdentifier>{BAF00917-2652-E724-AFBF-2DD71B201EE4}</UniqueIdentifier>
     </Filter>
@@ -17,6 +47,147 @@
   <ItemGroup>
     <ClInclude Include="include\resource_dir.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\adl_serializer.hpp">
+      <Filter>Header Files\nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\byte_container_with_subtype.hpp">
+      <Filter>Header Files\nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\abi_macros.hpp">
+      <Filter>Header Files\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\conversions\from_json.hpp">
+      <Filter>Header Files\nlohmann\detail\conversions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\conversions\to_chars.hpp">
+      <Filter>Header Files\nlohmann\detail\conversions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\conversions\to_json.hpp">
+      <Filter>Header Files\nlohmann\detail\conversions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\exceptions.hpp">
+      <Filter>Header Files\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\hash.hpp">
+      <Filter>Header Files\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\input\binary_reader.hpp">
+      <Filter>Header Files\nlohmann\detail\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\input\input_adapters.hpp">
+      <Filter>Header Files\nlohmann\detail\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\input\json_sax.hpp">
+      <Filter>Header Files\nlohmann\detail\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\input\lexer.hpp">
+      <Filter>Header Files\nlohmann\detail\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\input\parser.hpp">
+      <Filter>Header Files\nlohmann\detail\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\input\position_t.hpp">
+      <Filter>Header Files\nlohmann\detail\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\iterators\internal_iterator.hpp">
+      <Filter>Header Files\nlohmann\detail\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\iterators\iter_impl.hpp">
+      <Filter>Header Files\nlohmann\detail\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\iterators\iteration_proxy.hpp">
+      <Filter>Header Files\nlohmann\detail\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\iterators\iterator_traits.hpp">
+      <Filter>Header Files\nlohmann\detail\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\iterators\json_reverse_iterator.hpp">
+      <Filter>Header Files\nlohmann\detail\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\iterators\primitive_iterator.hpp">
+      <Filter>Header Files\nlohmann\detail\iterators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\json_custom_base_class.hpp">
+      <Filter>Header Files\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\json_pointer.hpp">
+      <Filter>Header Files\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\json_ref.hpp">
+      <Filter>Header Files\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\macro_scope.hpp">
+      <Filter>Header Files\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\macro_unscope.hpp">
+      <Filter>Header Files\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\meta\call_std\begin.hpp">
+      <Filter>Header Files\nlohmann\detail\meta\call_std</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\meta\call_std\end.hpp">
+      <Filter>Header Files\nlohmann\detail\meta\call_std</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\meta\cpp_future.hpp">
+      <Filter>Header Files\nlohmann\detail\meta</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\meta\detected.hpp">
+      <Filter>Header Files\nlohmann\detail\meta</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\meta\identity_tag.hpp">
+      <Filter>Header Files\nlohmann\detail\meta</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\meta\is_sax.hpp">
+      <Filter>Header Files\nlohmann\detail\meta</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\meta\logic.hpp">
+      <Filter>Header Files\nlohmann\detail\meta</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\meta\std_fs.hpp">
+      <Filter>Header Files\nlohmann\detail\meta</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\meta\type_traits.hpp">
+      <Filter>Header Files\nlohmann\detail\meta</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\meta\void_t.hpp">
+      <Filter>Header Files\nlohmann\detail\meta</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\output\binary_writer.hpp">
+      <Filter>Header Files\nlohmann\detail\output</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\output\output_adapters.hpp">
+      <Filter>Header Files\nlohmann\detail\output</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\output\serializer.hpp">
+      <Filter>Header Files\nlohmann\detail\output</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\string_concat.hpp">
+      <Filter>Header Files\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\string_escape.hpp">
+      <Filter>Header Files\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\string_utils.hpp">
+      <Filter>Header Files\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\detail\value_t.hpp">
+      <Filter>Header Files\nlohmann\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\json.hpp">
+      <Filter>Header Files\nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\json_fwd.hpp">
+      <Filter>Header Files\nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\ordered_map.hpp">
+      <Filter>Header Files\nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\thirdparty\hedley\hedley.hpp">
+      <Filter>Header Files\nlohmann\thirdparty\hedley</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nlohmann\thirdparty\hedley\hedley_undef.hpp">
+      <Filter>Header Files\nlohmann\thirdparty\hedley</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

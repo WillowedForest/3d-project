@@ -1,4 +1,3 @@
-
 #include "raylib.h"
 #include "nlohmann/json.hpp"
 #include <iostream>
@@ -77,37 +76,37 @@ Mesh CreateCustomMesh(float size = 1.0f) {
     mesh.texcoords = texcoords;
     mesh.indices = indices;
 
-    UploadMesh(&mesh, false);
+    //UploadMesh(&mesh, false);
 
     return mesh;
 
 }
 
-void SavePosition(Vector3 vec){
-    json data;
-
-    data["x"] = vec.x;
-    data["y"] = vec.y;
-    data["z"] = vec.z;
-
-    std::ofstream outfile("test.json");
-
-    if(!outfile.is_open()){
-        notopen = true;
-    }
-
-    outfile << data.dump(4);
-    outfile.close();
-
-}
+//void SavePosition(Vector3 vec){
+//    json data;
+//
+//    data["x"] = vec.x;
+//    data["y"] = vec.y;
+//    data["z"] = vec.z;
+//
+//    std::ofstream outfile("test.json");
+//
+//    if(!outfile.is_open()){
+//        notopen = true;
+//    }
+//
+//    outfile << data.dump(4);
+//    outfile.close();
+//
+//}
 
 int main() {
     InitWindow(screen.x, screen.y, "haiiiiii");
     SetTargetFPS(165);
+    DisableCursor();
 
-    Mesh mesh = CreateCustomMesh();
     Material material = LoadMaterialDefault();
-    Model model = LoadModelFromMesh(mesh);
+    Model model = LoadModelFromMesh(CreateCustomMesh(2));
     model.materials[0] = material;
 
     Camera3D camera;
@@ -116,7 +115,7 @@ int main() {
     camera.up = (Vector3{0.0f, 1.0f, 0.0f});
     camera.fovy = 90.0;
     camera.projection = CAMERA_PERSPECTIVE;
-
+    
     Vector3 cubePosition = {0.0f, 0.0f, 0.0f};
 
     while (!WindowShouldClose()) {
@@ -126,21 +125,24 @@ int main() {
         BeginDrawing();
 
         ClearBackground(PURPLE);
-
+        
+        DrawText("AAAAAAAAAAAA", 0, 0, 20, BLACK);
+        
         BeginMode3D(camera);
 
-        DrawModel(model, Vector3{0.0f, 0.0f, 0.0f},1.0f, WHITE);
-        DrawGrid(1000, 1.0f);
+        DrawModel(model, Vector3{ 1.0f, 1.0f, 1.0f }, 1.0f, BLACK);
+       
+        //DrawCube(Vector3{ 0.0f,0.0f,0.0f }, 5, 5, 5, WHITE);
+
+        DrawGrid(500, 2.0f);
 
         EndMode3D();
         EndDrawing();
-
-
     }
 
-    if(IsKeyPressed(KEY_T)){
-        SavePosition(camera.position);
-    }
+    //if(IsKeyPressed(KEY_T)){
+    ////    SavePosition(camera.position);
+    //}
 
     CloseWindow();
 
