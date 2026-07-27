@@ -7,14 +7,15 @@
 const Vector2 screen{800.0f, 480.0f};
 char outPut[5];
 
-const char* saveFilPeath = "test.json";
+const Vector3 Center = {0.0f, 0.0f, 0.0f};
+
+const char* saveFilPeath = "savefile.json";
 
 bool notopen = false;
 
 using json = nlohmann::json;
 
 Camera3D camera;
-
 
 Mesh CreateCustomMesh(float size = 1.0f) {
     Mesh mesh = { 0 };
@@ -140,9 +141,14 @@ int main() {
 
     Vector3 cubePosition = {0.0f, 0.0f, 0.0f};
 
-    Mesh mesh = CreateCustomMesh();
-    Model model = LoadModelFromMesh(mesh);
-    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].color = WHITE;
+
+    Model maincube = LoadModelFromMesh(CreateCustomMesh());
+    Model floorModle = LoadModelFromMesh(CreateCustomMesh());
+
+    Shader maincubeShader = LoadShader(0, "src/res/shaders/fragment.glsl");
+    int uTimeLoc = GetShaderLocation(maincubeShader, "uTime");
+    maincube.materials[0] = LoadMaterialDefault();
+    maincube.materials[0].shader = maincubeShader;
 
     while (!WindowShouldClose()) {
 
@@ -153,16 +159,13 @@ int main() {
         ClearBackground(DARKGRAY);
 
         BeginMode3D(camera);
+        //floor
+        DrawModelEx(floorModle, Vector3{ 1.0f, 1.0f, 1.0f }, Vector3{ 0.0f, 0.0f, 0.0f },30.0f, Vector3{ 20.0f, 2.0f, 20.0f }, WHITE);
 
-       // DrawModelEx(model, Vector3{ 1.0f, 1.0f, 1.0f }, Vector3{ 1.0f, 1.0f, 0.0f },30.0f, Vector3{ 2.0f, 2.0f, 2.0f }, WHITE);
-        DrawModel(model, Vector3{ 0.0f,0.0f,0.0f }, 1.0f, WHITE);
+        //main cube
+        DrawModel(maincube, Vector3{ 0.0f,5.0f,0.0f }, 1.0f, WHITE);
 
-        DrawCube(Vector3{ 0.0f,0.0f,0.0f }, 5, 5, 5, WHITE);
-
-        DrawGrid(500, 2.0f);
-
-
-
+        //DrawGrid(500, 1.0f);
 
         EndMode3D();
         EndDrawing();
@@ -174,8 +177,6 @@ int main() {
         if (IsKeyPressed(KEY_Y)) {
             LoadPlayerPosition();
         }
-
-
 
     }
 
