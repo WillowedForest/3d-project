@@ -2,19 +2,24 @@
 #include "nlohmann/json.hpp"
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <filesystem>
 
 
 const Vector2 screen{800.0f, 480.0f};
 char outPut[5];
 
-const char* saveFilPeath = "test.json";
+const Vector3 Center = {0.0f, 0.0f, 0.0f};
+
+const char* saveFilPeath = "savefile.json";
 
 bool notopen = false;
+
+bool haii = false;
 
 using json = nlohmann::json;
 
 Camera3D camera;
-
 
 Mesh CreateCustomMesh(float size = 1.0f) {
     Mesh mesh = { 0 };
@@ -140,29 +145,38 @@ int main() {
 
     Vector3 cubePosition = {0.0f, 0.0f, 0.0f};
 
-    Mesh mesh = CreateCustomMesh();
-    Model model = LoadModelFromMesh(mesh);
-    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].color = WHITE;
+    //loading shdaers
+    Shader spinningRainbowShader = LoadShader("src/res/shaders/vertex.glsl", "src/res/shaders/fragment.glsl");
+    int uTimeLoc = GetShaderLocation(spinningRainbowShader, "uTime");
+
+    //loading models
+    Model floorModel = LoadModelFromMesh(CreateCustomMesh());
+    floorModel.materials[0] = LoadMaterialDefault();
+
+    Model maincube = {0};
+    maincube = LoadModelFromMesh(CreateCustomMesh());
+    maincube.materials[0] = LoadMaterialDefault();
+    maincube.materials[0].shader = spinningRainbowShader;
 
     while (!WindowShouldClose()) {
 
         UpdateCamera(&camera, CAMERA_FREE);
+
+        float time = GetTime();
+        SetShaderValue(spinningRainbowShader, uTimeLoc, &time, SHADER_UNIFORM_FLOAT);
 
         BeginDrawing();
 
         ClearBackground(DARKGRAY);
 
         BeginMode3D(camera);
+        //floor
+        DrawModelEx(floorModel, Vector3{ 1.0f, 1.0f, 1.0f }, Vector3{ 0.0f, 0.0f, 0.0f },30.0f, Vector3{ 20.0f, 2.0f, 20.0f }, WHITE);
 
-       // DrawModelEx(model, Vector3{ 1.0f, 1.0f, 1.0f }, Vector3{ 1.0f, 1.0f, 0.0f },30.0f, Vector3{ 2.0f, 2.0f, 2.0f }, WHITE);
-        DrawModel(model, Vector3{ 0.0f,0.0f,0.0f }, 1.0f, WHITE);
+        //main cube
+        DrawModel(maincube, Vector3{ 0.0f,5.0f,0.0f }, 1.0f, WHITE);
 
-        DrawCube(Vector3{ 0.0f,0.0f,0.0f }, 5, 5, 5, WHITE);
-
-        DrawGrid(500, 2.0f);
-
-
-
+        //DrawGrid(500, 1.0f);
 
         EndMode3D();
         EndDrawing();
@@ -174,8 +188,6 @@ int main() {
         if (IsKeyPressed(KEY_Y)) {
             LoadPlayerPosition();
         }
-
-
 
     }
 

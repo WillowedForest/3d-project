@@ -173,6 +173,8 @@ if (downloadRaylib) then
         location "../"
         targetdir "../bin/%{cfg.buildcfg}"
 
+        debugdir "$(SolutionDir)"
+
         filter {"system:windows", "configurations:Release", "action:gmake*"}
             kind "WindowedApp"
             buildoptions { "-Wl,--subsystem,windows" }
@@ -211,7 +213,7 @@ if (downloadRaylib) then
         links {"raylib"}
 
         cdialect "C17"
-        cppdialect "C++20"
+        cppdialect "C++23"
 
         includedirs {raylib_dir .. "/src" }
 
