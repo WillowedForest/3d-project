@@ -2,6 +2,8 @@
 #include "nlohmann/json.hpp"
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <filesystem>
 
 
 const Vector2 screen{800.0f, 480.0f};
@@ -12,6 +14,8 @@ const Vector3 Center = {0.0f, 0.0f, 0.0f};
 const char* saveFilPeath = "savefile.json";
 
 bool notopen = false;
+
+bool haii = false;
 
 using json = nlohmann::json;
 
@@ -141,18 +145,25 @@ int main() {
 
     Vector3 cubePosition = {0.0f, 0.0f, 0.0f};
 
+    //loading shdaers
+    Shader spinningRainbowShader = LoadShader("src/res/shaders/vertex.glsl", "src/res/shaders/fragment.glsl");
+    int uTimeLoc = GetShaderLocation(spinningRainbowShader, "uTime");
 
-    Model maincube = LoadModelFromMesh(CreateCustomMesh());
-    Model floorModle = LoadModelFromMesh(CreateCustomMesh());
+    //loading models
+    Model floorModel = LoadModelFromMesh(CreateCustomMesh());
+    floorModel.materials[0] = LoadMaterialDefault();
 
-    Shader maincubeShader = LoadShader(0, "src/res/shaders/fragment.glsl");
-    int uTimeLoc = GetShaderLocation(maincubeShader, "uTime");
+    Model maincube = {0};
+    maincube = LoadModelFromMesh(CreateCustomMesh());
     maincube.materials[0] = LoadMaterialDefault();
-    maincube.materials[0].shader = maincubeShader;
+    maincube.materials[0].shader = spinningRainbowShader;
 
     while (!WindowShouldClose()) {
 
         UpdateCamera(&camera, CAMERA_FREE);
+
+        float time = GetTime();
+        SetShaderValue(spinningRainbowShader, uTimeLoc, &time, SHADER_UNIFORM_FLOAT);
 
         BeginDrawing();
 
@@ -160,7 +171,7 @@ int main() {
 
         BeginMode3D(camera);
         //floor
-        DrawModelEx(floorModle, Vector3{ 1.0f, 1.0f, 1.0f }, Vector3{ 0.0f, 0.0f, 0.0f },30.0f, Vector3{ 20.0f, 2.0f, 20.0f }, WHITE);
+        DrawModelEx(floorModel, Vector3{ 1.0f, 1.0f, 1.0f }, Vector3{ 0.0f, 0.0f, 0.0f },30.0f, Vector3{ 20.0f, 2.0f, 20.0f }, WHITE);
 
         //main cube
         DrawModel(maincube, Vector3{ 0.0f,5.0f,0.0f }, 1.0f, WHITE);
