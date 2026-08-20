@@ -6,7 +6,7 @@
 #include <filesystem>
 
 
-const Vector2 screen{800.0f, 480.0f};
+const Vector2 screen{1280.0f, 720.0f};
 char outPut[5];
 
 const Vector3 Center = {0.0f, 0.0f, 0.0f};
@@ -122,7 +122,7 @@ void SaveCamersPosition(){
 }
 
 void LoadPlayerPosition(){
-    std::ifstream file("test.json");
+    std::ifstream file(saveFilPeath);
 
     json data = json::parse(file);
     file.close();
