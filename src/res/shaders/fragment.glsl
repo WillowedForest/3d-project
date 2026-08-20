@@ -13,7 +13,7 @@ vec3 hsv2rgb(vec3 c) {
 }
 
 void main() {
-    float hue = fragTexCoord.x + uTime * 0.5;
+    float hue = fragTexCoord.x + uTime * 0.1;
     vec3 color = hsv2rgb(vec3(fract(hue), 1.0, 1.0));
     finalColor = vec4(color, 1.0);
 

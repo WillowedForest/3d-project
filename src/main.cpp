@@ -1,21 +1,19 @@
 #include "raylib.h"
 #include "nlohmann/json.hpp"
+#include <cstddef>
+#include <functional>
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <filesystem>
 
 
-const Vector2 screen{800.0f, 480.0f};
+const Vector2 screen{1280.0f, 720.0f};
 char outPut[5];
 
 const Vector3 Center = {0.0f, 0.0f, 0.0f};
 
-const char* saveFilPeath = "savefile.json";
-
-bool notopen = false;
-
-bool haii = false;
+const char* saveFilPeath = "src/res/savefile.json";
 
 using json = nlohmann::json;
 
@@ -112,17 +110,13 @@ void SaveCamersPosition(){
 
     std::ofstream outfile(saveFilPeath);
 
-    if(!outfile.is_open()){
-        notopen = true;
-    }
-
-    outfile << data.dump(4);
+    outfile << data.dump();
     outfile.close();
 
 }
 
 void LoadPlayerPosition(){
-    std::ifstream file("test.json");
+    std::ifstream file(saveFilPeath);
 
     json data = json::parse(file);
     file.close();
@@ -134,8 +128,10 @@ void LoadPlayerPosition(){
 
 int main() {
     InitWindow(screen.x, screen.y, "haiiiiii");
+    InitAudioDevice();
     SetTargetFPS(165);
     DisableCursor();
+
 
     camera.position = {10.0f, 10.0f, 10.0f};
     camera.target = Vector3{2.0f, 2.0f, 2.0f};
@@ -149,14 +145,22 @@ int main() {
     Shader spinningRainbowShader = LoadShader("src/res/shaders/vertex.glsl", "src/res/shaders/fragment.glsl");
     int uTimeLoc = GetShaderLocation(spinningRainbowShader, "uTime");
 
+    Shader transFlag = LoadShader("src/res/shaders/trans-vert.glsl", "src/res/shaders/trans-frag.glsl");
+
     //loading models
     Model floorModel = LoadModelFromMesh(CreateCustomMesh());
     floorModel.materials[0] = LoadMaterialDefault();
 
-    Model maincube = {0};
-    maincube = LoadModelFromMesh(CreateCustomMesh());
-    maincube.materials[0] = LoadMaterialDefault();
-    maincube.materials[0].shader = spinningRainbowShader;
+   /*Model teapot = {0};
+    teapot = LoadModel("src/res/model/teapot.obj");
+    teapot.materials[0] = LoadMaterialDefault();
+    teapot.materials[0].shader = spinningRainbowShader;
+*/
+
+   Model world = {0};
+   world = LoadModel("src/res/model/world.obj");
+
+    Sound funny = LoadSound("src/res/sound/funny.wav");
 
     while (!WindowShouldClose()) {
 
@@ -169,17 +173,58 @@ int main() {
 
         ClearBackground(DARKGRAY);
 
+        DrawFPS(10, 10);
+
         BeginMode3D(camera);
+
         //floor
         DrawModelEx(floorModel, Vector3{ 1.0f, 1.0f, 1.0f }, Vector3{ 0.0f, 0.0f, 0.0f },30.0f, Vector3{ 20.0f, 2.0f, 20.0f }, WHITE);
 
-        //main cube
-        DrawModel(maincube, Vector3{ 0.0f,5.0f,0.0f }, 1.0f, WHITE);
+        DrawModelEx(world, Vector3{ 0.0f, 1.8f, 0.0f }, Vector3{ 0.0f, 0.0f, 0.0f },30.0f, Vector3{ 0.05f, 0.05f, 0.05f }, WHITE);
+
+        /* for (int i = 0; i <= 20; i++) {
+
+            Vector3 pos = Vector3{0.0f + i * 3, 1.8f, 0.0f};
+
+            DrawModelEx(world, pos, Vector3{ 0.0f, 0.0f, 0.0f },30.0f, Vector3{ 0.05f, 0.05f, 0.05f }, WHITE);
+            }
+
+         for (int i = 0; i <= 20; i++) {
+
+            Vector3 pos = Vector3{0.0f + i * 3, 1.8f * 2, 0.0f};
+
+            DrawModelEx(world, pos, Vector3{ 0.0f, 0.0f, 0.0f },30.0f, Vector3{ 0.05f, 0.05f, 0.05f }, WHITE);
+            }
+
+         for (int i = 0; i <= 20; i++) {
+
+            Vector3 pos = Vector3{0.0f + i * 3, 1.8f * 3, 0.0f};
+
+            DrawModelEx(world, pos, Vector3{ 0.0f, 0.0f, 0.0f },30.0f, Vector3{ 0.05f, 0.05f, 0.05f }, WHITE);
+            }
+
+         for (int i = 0; i <= 20; i++) {
+
+            Vector3 pos = Vector3{0.0f + i * 3, 1.8f * 4, 0.0f};
+
+            DrawModelEx(world, pos, Vector3{ 0.0f, 0.0f, 0.0f },30.0f, Vector3{ 0.05f, 0.05f, 0.05f }, WHITE);
+            }
+
+         for (int i = 0; i <= 20; i++) {
+
+            Vector3 pos = Vector3{0.0f + i * 3, 1.8f * 5, 0.0f};
+
+            DrawModelEx(world, pos, Vector3{ 0.0f, 0.0f, 0.0f },30.0f, Vector3{ 0.05f, 0.05f, 0.05f }, WHITE);
+            }*/
 
         //DrawGrid(500, 1.0f);
 
         EndMode3D();
         EndDrawing();
+
+        if(IsKeyPressed(KEY_U)){
+            PlaySound(funny);
+        }
 
         if(IsKeyPressed(KEY_T)){
             SaveCamersPosition();
@@ -191,6 +236,11 @@ int main() {
 
     }
 
+    UnloadModel(floorModel);
+    //UnloadModel(teapot);
+    UnloadModel(world);
+
+    UnloadSound(funny);
 
     CloseWindow();
 
